@@ -5,8 +5,8 @@
 #include "get_array_length.h"
 
 /*
-    get length of an array of strings
-    REQUIRE: NULL sentinel value as last elem of array
+get length of an array of strings
+REQUIRE: NULL sentinel value as last elem of array
 */
 int get_array_length(char **arr) 
 {
