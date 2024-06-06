@@ -2,7 +2,7 @@
 
 #include "is_whitespace.h"
 
-int is_whitechar(char c)
+int is_whitespace(char c)
 {
     char newline = '\n';
     char tab = '\t';
