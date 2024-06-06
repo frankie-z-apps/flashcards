@@ -2,35 +2,29 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "import_file_lines.h"
+
 #define MAX_LINE_LENGTH 1024
 #define INITIAL_ARRAY_SIZE 5
 
 /*
-Given a file with a text content,
+Given an OPEN file,
 get all file lines and put them
 in an array of strings <- returned value
 */
-
-char **import_file_lines(char *filename)
+char **import_file_lines(FILE *file)
 {
     char **lines = NULL;
     char buffer[MAX_LINE_LENGTH];
     int array_size = INITIAL_ARRAY_SIZE;
     int line_count = 0;
 
-    // Open file
-    FILE *file = fopen(filename, "r");
-    if (!file) {
-        fprintf(stderr, "Error opening file %s.\n", filename);
-        return 1;
-    }
-
     // Allocate initial memory for array of lines
     lines = malloc(array_size * sizeof(char *));
     if (!lines) {
         fprintf(stderr, "Error while allocating memory.\n");
         fclose(file);
-        return 2;
+        return NULL;
     }
 
     // Copy every line in the array
@@ -41,7 +35,7 @@ char **import_file_lines(char *filename)
             if (!lines) {
                 fprintf(stderr, "Error while reallocating memory.\n");
                 fclose(file);
-                return 3;
+                return NULL;
             }
         }
 
@@ -50,12 +44,12 @@ char **import_file_lines(char *filename)
         if (!lines[line_count]) {
             fprintf(stderr, "Error while allocating memory for line.\n");
             fclose(file);
-            return 4;
+            return NULL;
         }
         strcpy(lines[line_count], buffer);
 
         line_count++;
-}
+    }
 
     // Add a NULL sentinel value indicating end of list
     if (line_count >= array_size) {
@@ -64,7 +58,7 @@ char **import_file_lines(char *filename)
         if (!lines) {
             fprintf(stderr, "Error while reallocating memory.\n");
             fclose(file);
-            return 4;
+            return NULL;
         }
     }
     lines[line_count] = NULL;
