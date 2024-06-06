@@ -4,11 +4,9 @@
 
 #include "is_whitespace.h"
 #include "get_array_length.h"
+#include "filter_lines.h"
 
 #define MAX_LINE_LENGTH 1024
-
-int get_array_length(char **arr);
-int is_whitechar(char c);
 
 /*
 given an array of strings, exclude the strings beginning with a letter
@@ -38,7 +36,7 @@ char **filter_lines(char **rawlines)
         //printf("Line number %d of raw-lines: %s\n. Current char(c): %c.\n", line, string, *string);
         char c = *string;
         if (c) {
-            while (is_whitechar(c)) {
+            while (is_whitespace(c)) {
                 //printf("In the while loop, current char -> %c\n", c);
                 string++;
                 c = *string;
@@ -67,6 +65,7 @@ char **filter_lines(char **rawlines)
         }
         
     }
+    filtered_lines[valid_lines_count] = NULL;
     return filtered_lines;
 }
 
@@ -94,4 +93,4 @@ int main()
 
     return 0;
 }
-*/
+//*/
