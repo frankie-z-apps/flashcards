@@ -6,5 +6,5 @@ int is_whitechar(char c)
     char tab = '\t';
     char space = ' ';
 
-    return c != newline && c != tab && c != space;
+    return c == newline || c == tab || c == space;
 }
