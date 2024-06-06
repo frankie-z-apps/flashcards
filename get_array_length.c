@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "get_array_length.h"
+
 /*
     get length of an array of strings
     REQUIRE: NULL sentinel value as last elem of array
