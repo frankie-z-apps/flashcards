@@ -1,0 +1,17 @@
+            File title, AKA first non-valid line
+
+- first valid line
+second non-valid line
+- second valid line
+ - third valid line
+
+
+ third non-valid line
+    fourth non-valid line
+    - fourth valid line
+
+
+
+.
+
+END OF FILE
