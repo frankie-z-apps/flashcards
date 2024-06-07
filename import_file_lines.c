@@ -29,6 +29,9 @@ char **import_file_lines(FILE *file)
 
     // Copy every line in the array
     while (fgets(buffer, MAX_LINE_LENGTH, file) != NULL) {
+        // Remove newline if present
+        buffer[strcspn(buffer, "\n")] = '\0';
+
         if (line_count >= array_size) {
             array_size *= 2 + 1;
             lines = realloc(lines, array_size * sizeof(char *));
