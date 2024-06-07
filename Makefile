@@ -18,16 +18,20 @@ IMPORT_FILE_LINES_O = import_file_lines.o
 FILTER_LINES_O = filter_lines.o
 GET_ARRAY_LENGTH_O = get_array_length.o
 IS_WHITESPACE_O = is_whitespace.o
+CREATE_DECK_O = create_deck.o
 MAIN_O = main.o
 
 # Header files
-HEADERS = import_file_lines.h filter_lines.h get_array_length.h is_whitespace.h
+HEADERS = import_file_lines.h filter_lines.h get_array_length.h is_whitespace.h create_deck.h
 
 # Target (executable)
 .PHONY: main
 
-main: $(IMPORT_FILE_LINES_O) $(FILTER_LINES_O) $(GET_ARRAY_LENGTH_O) $(IS_WHITESPACE_O) $(MAIN_O)
-	$(CC) $(LDFLAGS) $(IMPORT_FILE_LINES_O) $(FILTER_LINES_O) $(GET_ARRAY_LENGTH_O) $(IS_WHITESPACE_O) $(MAIN_O) -o main
+main: $(IMPORT_FILE_LINES_O) $(FILTER_LINES_O) $(GET_ARRAY_LENGTH_O) $(IS_WHITESPACE_O) $(CREATE_DECK_O) $(MAIN_O)
+	$(CC) $(LDFLAGS) $(IMPORT_FILE_LINES_O) $(FILTER_LINES_O) $(GET_ARRAY_LENGTH_O) $(IS_WHITESPACE_O) $(CREATE_DECK_O) $(MAIN_O) -o main
+
+$(CREATE_DECK_O): $(HEADERS) create_deck.c
+	$(CC) -c create_deck.c
 
 # Object files
 $(IMPORT_FILE_LINES_O): $(HEADERS) import_file_lines.c
@@ -49,4 +53,4 @@ $(MAIN_O): $(HEADERS) main.c
 .PHONY: clean
 
 clean:
-	rm -f $(IMPORT_FILE_LINES_O) $(FILTER_LINES_O) $(GET_ARRAY_LENGTH_O) $(IS_WHITESPACE_O) $(MAIN_O) main
+	rm -f $(IMPORT_FILE_LINES_O) $(FILTER_LINES_O) $(GET_ARRAY_LENGTH_O) $(IS_WHITESPACE_O) $(CREATE_DECK_O) $(MAIN_O) main
