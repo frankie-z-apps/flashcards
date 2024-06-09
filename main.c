@@ -2,6 +2,7 @@
 #include <string.h>
 
 #include "create_deck.h"
+#include "shuffle_deck.h"
 
 #define MAX_INPUT_LENGTH 1024
 
@@ -16,10 +17,22 @@ int main(int argc, char const *argv[])
 
     char **deck = create_deck(user_input);
 
+    /* test for deck
     while (*deck) {
         fprintf(stdout, "%s\n", *deck);
         deck++;
     }
+    */
+    
+    // Now I want to shuffle the deck
+    char **shuffled_deck = shuffle_deck(deck);
+
+    ///* test for shuffled deck
+    while (*shuffled_deck) {
+        fprintf(stdout, "%s\n", *shuffled_deck);
+        shuffled_deck++;
+    }
+    //*/
 
     return 0;
 }
