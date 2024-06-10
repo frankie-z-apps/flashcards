@@ -53,7 +53,7 @@ int generate_random_int(int b)
     fread(&random_int, sizeof(int), 1, urandom);
     fclose(urandom);
 
-    return random_int % b;
+    return abs(random_int) % b;
 }
 
 
@@ -90,3 +90,26 @@ int *randomize_indexes(int n)
 }
 
 
+/* test
+int main() 
+{
+    char *my_deck[] = {
+        "first",
+        "second",
+        "third",
+        "fourth",
+        "fifth",
+        "sixth",
+        NULL
+    };
+
+    char **shuffled = shuffle_deck(my_deck);
+
+    while (*shuffled) {
+        printf("%s.\n", *shuffled);
+        shuffled++;
+    }
+
+    return 0;
+}
+//*/
