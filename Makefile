@@ -8,18 +8,22 @@ GET_ARRAY_LENGTH_O = get_array_length.o
 IS_WHITESPACE_O = is_whitespace.o
 CREATE_DECK_O = create_deck.o
 SHUFFLE_DECK_O = shuffle_deck.o
+START_MENU_O = start_menu.o
 MAIN_O = main.o
 
 # Header files
-HEADERS = import_file_lines.h filter_lines.h get_array_length.h is_whitespace.h create_deck.h shuffle_deck.h
+HEADERS = import_file_lines.h filter_lines.h get_array_length.h is_whitespace.h create_deck.h shuffle_deck.h start_menu.h
 
 # Target (executable)
 .PHONY: main
 
-main: $(IMPORT_FILE_LINES_O) $(FILTER_LINES_O) $(GET_ARRAY_LENGTH_O) $(IS_WHITESPACE_O) $(CREATE_DECK_O) $(SHUFFLE_DECK_O) $(MAIN_O)
-	$(CC) $(LDFLAGS) $(IMPORT_FILE_LINES_O) $(FILTER_LINES_O) $(GET_ARRAY_LENGTH_O) $(IS_WHITESPACE_O) $(CREATE_DECK_O) $(SHUFFLE_DECK_O) $(MAIN_O) -o main
+main: $(IMPORT_FILE_LINES_O) $(FILTER_LINES_O) $(GET_ARRAY_LENGTH_O) $(IS_WHITESPACE_O) $(CREATE_DECK_O) $(SHUFFLE_DECK_O) $(START_MENU_O) $(MAIN_O)
+	$(CC) $(LDFLAGS) $(IMPORT_FILE_LINES_O) $(FILTER_LINES_O) $(GET_ARRAY_LENGTH_O) $(IS_WHITESPACE_O) $(CREATE_DECK_O) $(SHUFFLE_DECK_O) $(START_MENU_O) $(MAIN_O) -o main
 
 # Object files
+$(START_MENU_O): $(HEADERS) start_menu.c
+	$(CC) -c start_menu.c
+
 $(CREATE_DECK_O): $(HEADERS) create_deck.c
 	$(CC) -c create_deck.c
 
@@ -45,4 +49,4 @@ $(MAIN_O): $(HEADERS) main.c
 .PHONY: clean
 
 clean:
-	rm -f $(IMPORT_FILE_LINES_O) $(FILTER_LINES_O) $(GET_ARRAY_LENGTH_O) $(IS_WHITESPACE_O) $(CREATE_DECK_O) $(SHUFFLE_DECK_O) $(MAIN_O) main
+	rm -f $(IMPORT_FILE_LINES_O) $(FILTER_LINES_O) $(GET_ARRAY_LENGTH_O) $(IS_WHITESPACE_O) $(CREATE_DECK_O) $(SHUFFLE_DECK_O) $(START_MENU_O) $(MAIN_O) main
