@@ -4,6 +4,7 @@
 #include "create_deck.h"
 #include "shuffle_deck.h"
 #include "start_menu.h"
+#include "play_game.h"
 
 #define MAX_INPUT_LENGTH 1024
 
@@ -34,21 +35,14 @@ int main(int argc, char const *argv[])
         // Now I want to shuffle the deck
         char **shuffled_deck = shuffle_deck(deck);
 
-        ///* test for shuffled deck
+        /* test for shuffled deck
         while (*shuffled_deck) {
             fprintf(stdout, "%s\n", *shuffled_deck);
             shuffled_deck++;
         }
         //*/
-
         play_game(shuffled_deck);
     }
-    return 0;
-}
-
-
-int play_game(char **deck) {
-    printf("Playing game with deck!\n");
     return 0;
 }
 
