@@ -7,7 +7,6 @@
 #include "card.h"
 
 
-
 struct Deck insert_card(struct Deck deck, int feedback);
 
 int play_deck(struct Deck deck)
@@ -37,15 +36,10 @@ int play_deck(struct Deck deck)
             if (input == 1 && modify_answer == '\n') {
                 break;
             } else if (input == 1 && modify_answer == 'm' || modify_answer == 'M') {
-                printf("Enter new answer, then press <Enter>\n>");
-                int i=0;
                 while (getchar() != '\n');
-                char c = getchar();
-                while (c != '\n') {
-                    buffer[i] = c;
-                    i++;
-                    c = getchar();
-                }
+                printf("Enter new answer, then press <Enter>\n>");                
+                fgets(buffer, MAX_STRING_LENGTH, stdin);
+                buffer[strcspn(buffer, "\n")] = '\0';
                 strcpy(deck.cards[0].answer, buffer);
                 break;
             } else {
