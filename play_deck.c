@@ -90,7 +90,7 @@ struct Deck insert_card(struct Deck deck, int feedback)
 }
 
 
-///*
+/*
 int main()
 {
     struct Deck deck;
@@ -117,11 +117,11 @@ int main()
 
     play_deck(deck);
 
-    /*
+    
     for (int i=0; i<deck.size; i++) {
         printf("Question:\n\t%s\nAnswer:\n\t%s\n", deck.cards[i].question, deck.cards[i].answer);
     }
-    */
+
 
     return 0;
 }

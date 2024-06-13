@@ -9,14 +9,7 @@
 
 
 char **create_deck(char *filename)
-{    
-    /*
-    if (argc != 2) {
-        fprintf(stderr, "Correct usage: %s [filename].\n", argv[0]);
-        return 1;
-    }
-    */
-       
+{           
     FILE *file = fopen(filename, "r");
     if (!file) {
         fprintf(stderr, "Error while opening file %s. Please try again.\n", filename);
@@ -36,15 +29,6 @@ char **create_deck(char *filename)
         fprintf(stderr, "Error while filtering lines.\n");
         return NULL;
     }
-
-    /*// print test
-    int filtered_len = get_array_length(filtered_lines);
-
-    
-    for (int i=0; i<filtered_len; i++) {
-        printf("Filtered[%d]: %s.\n", i, filtered_lines[i]);
-    }
-    //*/
 
     return filtered_lines;
 }
