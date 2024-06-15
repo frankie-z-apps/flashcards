@@ -1,46 +1,49 @@
 #include <stdio.h>
 #include <math.h>
 #include <string.h>
+#include <signal.h>
+#include <stdlib.h>
+#include <unistd.h>
 
+#include "save_deck.h"
 #include "play_deck.h"
 #include "deck.h"
 #include "card.h"
 
 
 struct Deck insert_card(struct Deck deck, int feedback);
+int saving_prompt(struct Deck *deck);
 
-int play_deck(struct Deck deck)
+
+int play_deck(struct Deck *deck)
 {
-    char view_answer = ' ';
-    char modify_answer = ' ';
     char buffer[MAX_STRING_LENGTH] = { };
-    int feedback = 0;
-    
-    printf("Deck size: %d\n", deck.size);
+    int feedback = -1;
 
     while (1) {
-        printf("\n%s\n\n", deck.cards[0].question);
+        printf("\n%s\n\n", deck->cards[0].question);
 
         while (1) {
             printf("\nPress <Enter> to view answer\n");
-            int input = scanf("%c", &view_answer);
-            if (input == 1 && view_answer == '\n') {
-                printf("Answer:\n\n%s\n\n", deck.cards[0].answer);
+            char input = getchar();
+            if (input == '\n') {
+                printf("Answer:\n\n%s\n\n", deck->cards[0].answer);
                 break;
             }
+            while (getchar() != '\n');
         }
 
         while (1) {
             printf("\nPress <m> to modify the answer for this card\nPress <Enter> to continue\n");
-            int input = scanf("%c", &modify_answer);
-            if (input == 1 && modify_answer == '\n') {
+            char input = getchar();
+            if (input == '\n') {
                 break;
-            } else if (input == 1 && modify_answer == 'm' || modify_answer == 'M') {
+            } else if (input == 'm' || input == 'M') {
                 while (getchar() != '\n');
-                printf("Enter new answer, then press <Enter>\n>");                
+                printf("Enter new answer, then press <Enter>\n>");
                 fgets(buffer, MAX_STRING_LENGTH, stdin);
                 buffer[strcspn(buffer, "\n")] = '\0';
-                strcpy(deck.cards[0].answer, buffer);
+                strcpy(deck->cards[0].answer, buffer);
                 break;
             } else {
                 printf("Invalid input, press <m> or <Enter> to continue.\n>");
@@ -58,11 +61,23 @@ int play_deck(struct Deck deck)
                 while (getchar() != '\n');
             }
         }
-        deck = insert_card(deck, feedback);
+        *deck = insert_card(*deck, feedback);
         while(getchar() != '\n');
-    }
 
-    return 0;
+        while (1) {
+            printf("Press <Enter> to continue, <x> to exit.\n");
+            char input = getchar();
+            if (input == '\n') {
+                break;
+            } else if (input == 'x' || input == 'X') {
+                while (getchar() != '\n');
+                saving_prompt(deck);
+                return 0;
+            } else {
+                while (getchar() != '\n');
+            }
+        }
+    }
 }
 
 
@@ -90,11 +105,35 @@ struct Deck insert_card(struct Deck deck, int feedback)
 }
 
 
+int saving_prompt(struct Deck *deck) {
+    while (1) {
+        printf("Do you want to save the deck before exiting? (y/n)\n");
+        char save = getchar();
+        if (save == 'y') {
+            while (getchar() != '\n');
+            char filename[256];
+            printf("Enter filename to save the deck:\n>");
+            fgets(filename, sizeof(filename), stdin);
+            filename[strcspn(filename, "\n")] = '\0';
+            save_deck(deck, filename);
+            exit(0);
+        } else if (save == 'n') {
+            printf("Goodbye then!\n");
+            exit(0);
+        } else {
+            printf("Press <y>/<n> to save/exit.\n");
+            while (getchar() != '\n');
+        }
+    }
+    return 0;
+}
+
+
 /*
 int main()
 {
-    struct Deck deck;
-    deck.size = 4;
+    struct Deck main_deck;
+    main_deck.size = 4;
 
     struct Card card1;
     struct Card card2;
@@ -110,18 +149,16 @@ int main()
     strcpy(card3.answer, "Only by searching you will find answers to your questions.");
     strcpy(card4.answer, "No I do not.");
 
-    deck.cards[0] = card1;
-    deck.cards[1] = card2;
-    deck.cards[2] = card3;
-    deck.cards[3] = card4;
+    main_deck.cards = (struct Card*)malloc(main_deck.size * sizeof(struct Card));
 
-    play_deck(deck);
+    main_deck.cards[0] = card1;
+    main_deck.cards[1] = card2;
+    main_deck.cards[2] = card3;
+    main_deck.cards[3] = card4;
 
-    
-    for (int i=0; i<deck.size; i++) {
-        printf("Question:\n\t%s\nAnswer:\n\t%s\n", deck.cards[i].question, deck.cards[i].answer);
-    }
+    play_deck(&main_deck);
 
+    free(main_deck.cards);
 
     return 0;
 }

@@ -3,6 +3,6 @@
 
 #include "deck.h"
 
-int play_deck(struct Deck deck);
+int play_deck(struct Deck *deck);
 
 #endif
