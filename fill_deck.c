@@ -36,13 +36,13 @@ struct Deck fill_deck(char *filename)
     char **shuffled_lines = shuffle_deck(filtered_lines);
 
     struct Deck deck;
-    deck.size = 0;
+    deck.size = get_array_length(shuffled_lines);
+    deck.cards = (struct Card*)malloc(deck.size * sizeof(struct Card));
     int i = 0;
 
     while (*shuffled_lines) {
         strcpy(deck.cards[i].question, *shuffled_lines);
         strcpy(deck.cards[i].answer, "This question has not an answer yet. Press <m> to modify this text.");
-        deck.size++;
         shuffled_lines++;
         i++;
     }
