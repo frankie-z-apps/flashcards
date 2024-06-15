@@ -7,8 +7,9 @@
 
 struct Deck
 {
-    struct Card cards[MAX_DECK_SIZE];
     int size;
+    struct Card *cards;
+    
 };
 
 
