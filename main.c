@@ -25,7 +25,10 @@ int main(int argc, char const *argv[])
         fprintf(stdout, "Please insert your deck filename, then press ENTER:\n>");
         fgets(load_deck_filename, MAX_INPUT_LENGTH, stdin);
         load_deck_filename[strcspn(load_deck_filename, "\n")] = '\0';
-        load_deck(load_deck_filename, &deck);
+        int load_deck_result = load_deck(load_deck_filename, &deck);
+        if (load_deck_result) {
+            return load_deck_result;
+        }
     } else if (user_choice == 0) {
         while (getchar() != '\n');
         fprintf(stdout, "Please insert text filename from which to extract card texts, then press ENTER: >");
