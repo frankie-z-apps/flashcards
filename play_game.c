@@ -30,7 +30,6 @@ int play_game(char **deck)
     return 0;
 }
 
-
 int insert_card(char **deck, int feedback)
 {
     feedback++;
@@ -40,11 +39,7 @@ int insert_card(char **deck, int feedback)
     int deck_size = get_array_length(deck);
     double index_ratio = deck_size / 10.0;
 
-    if (fmod(feedback * index_ratio, 1.0) != 0.0) {
-        index = (int) feedback * index_ratio + 1;
-    } else {
-        index = (int) feedback * index_ratio;
-    }
+    index = (int) ceil(feedback * index_ratio);
     if (index >= deck_size) {
         index--;
     }
@@ -55,28 +50,3 @@ int insert_card(char **deck, int feedback)
 
     return 0;
 }
-
-
-/*
-int main()
-{
-    char *my_deck[] = {
-        "one",
-        "two",
-        "three",
-        "four",
-        "five",
-        "six",
-        "seven",
-        "eight",
-        "nine",
-        "ten",
-        "eleven",
-        "twelve",
-        NULL
-    };
-
-    play_game(my_deck);
-    return 0;
-}
-//*/

@@ -29,7 +29,8 @@ char **shuffle_deck(char **deck)
 
     for (int i=0; i<deck_size; i++) {
         int string_length = strlen(deck[randomized_indexes[i]]);
-        shuffled[i] = malloc(string_length * sizeof(char));
+        // string_length + 1 to make space for the NULL terminator, otherwise it's undefined behaviour
+        shuffled[i] = malloc((string_length + 1) * sizeof(char));
         strcpy(shuffled[i], deck[randomized_indexes[i]]);
     }
 
@@ -39,7 +40,7 @@ char **shuffle_deck(char **deck)
 
 
 /*
-Generate a random number in range [0, b]
+Generate a random number in range [0, b)
 excluding b
 */
 int generate_random_int(int b)

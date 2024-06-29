@@ -88,11 +88,7 @@ struct Deck insert_card(struct Deck deck, int feedback)
     struct Card temp = deck.cards[0];
     double index_ratio = deck.size / 10.0;
 
-    if (fmod(feedback * index_ratio, 1.0) != 0.0) {
-        index = (int) feedback * index_ratio + 1;
-    } else {
-        index = (int) feedback * index_ratio;
-    }
+    index = (int) ceil(feedback * index_ratio);
     if (index >= deck.size) {
         index--;
     }
@@ -111,7 +107,8 @@ int saving_prompt(struct Deck *deck) {
         char save = getchar();
         if (save == 'y') {
             while (getchar() != '\n');
-            char filename[256];
+            // Initialize the local buffer to 0
+            char filename[256] = {};
             printf("Enter filename to save the deck:\n>");
             fgets(filename, sizeof(filename), stdin);
             filename[strcspn(filename, "\n")] = '\0';

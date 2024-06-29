@@ -15,7 +15,7 @@ in an array of strings <- returned value
 char **import_file_lines(FILE *file)
 {
     char **lines = NULL;
-    char buffer[MAX_LINE_LENGTH];
+    char buffer[MAX_LINE_LENGTH] = {0}; // Initialize the buffer to 0
     int array_size = INITIAL_ARRAY_SIZE;
     int line_count = 0;
 
@@ -33,7 +33,7 @@ char **import_file_lines(FILE *file)
         buffer[strcspn(buffer, "\n")] = '\0';
 
         if (line_count >= array_size) {
-            array_size *= 2 + 1;
+            array_size = array_size * 2 + 1;
             lines = realloc(lines, array_size * sizeof(char *));
             if (!lines) {
                 fprintf(stderr, "Error while reallocating memory.\n");
@@ -52,6 +52,9 @@ char **import_file_lines(FILE *file)
         strcpy(lines[line_count], buffer);
 
         line_count++;
+        // Needed to correctly have a null-terminated string inside of buffer
+        //  in the case that fgets returns before finding a new line character
+        memset(buffer, '\0', MAX_LINE_LENGTH);
     }
 
     // Add a NULL sentinel value indicating end of list

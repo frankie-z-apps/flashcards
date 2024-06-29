@@ -65,6 +65,8 @@ char **filter_lines(char **rawlines)
         }
         
     }
+    // Deallocate unused memory by resizing to the actually needed size
+    filtered_lines = realloc(filtered_lines, (valid_lines_count + 1) * sizeof(char *));
     filtered_lines[valid_lines_count] = NULL;
     return filtered_lines;
 }
